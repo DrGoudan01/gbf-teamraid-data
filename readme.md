@@ -61,3 +61,20 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 ## About data
 
 If you just want to get all data, just Email [trim21me@hotmail.com](mailto:trim21me@hotmail.com). Do not crawl from api.
+
+
+## LICENSE
+
+DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 2, December 2004
+
+Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. You just DO WHAT THE FUCK YOU WANT TO.
