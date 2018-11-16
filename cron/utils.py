@@ -1,7 +1,7 @@
 import re
 
 import requests
-
+import requests.cookies
 from config import proxies, headerString
 from cookies import cookies as defaultCookies
 
@@ -23,6 +23,12 @@ def initSession():
                       if len(line) == 2 and line[0] != 'Cookie'}
     s = requests.Session()
     s.proxies.update(proxies)
-    s.cookies.update(defaultCookies)
+    jar = requests.cookies.RequestsCookieJar()
+    for cookie in defaultCookies:
+        jar.set(cookie['key'], cookie['value'], domain=cookie['host'])
+    # jar.set('tasty_cookie', 'yum', domain='httpbin.org', path='/cookies')
+    # jar.set('gross_cookie', 'blech', domain='httpbin.org', path='/elsewhere')
+    s.cookies = jar
+    # s.cookies.update(defaultCookies)
     s.headers.update(defaultHeaders)
     return s

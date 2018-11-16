@@ -52,8 +52,8 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 
 请确保使用的profile看(skip)过了第一次点进马票的剧情, 不然会导致无法抓取马票数据.
 
-尝试运行`python cron/bookmaker.py`, 会根据对应设置的profile在`cron`文件夹下生成`cron/cookie.json`, 如果
- 如果成功抓取到了数据存入数据库, 把cron文件夹复制到服务器上, 设置对应的crontab让其抓取数据.
+尝试运行`python cron/bookmaker.py` 会使用`cron/cookies.json`做为cookies抓取数据 如果抓取成功了会把抓取到的数据存入数据库.你会看到屏幕输出类似`{'north': 0, 'west': 0, 'east': 0, 'south': 0, 'time': 1542379231, '_id': ObjectId('5beed6df0048fa6048c63987')}`的内容.
+如果cy又改了认证方式导致无法登录,你会看到`{"auth_status":"require_auth","state":"mobage-connect_5beed740437a99.44333034"}`
 
  server文件夹不需要做修改(如果你的mongodb是运行在默认端口上), 安装好依赖后直接`python app.py`启动服务器, 默认会运行在6001端口.
 
