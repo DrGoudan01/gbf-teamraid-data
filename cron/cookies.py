@@ -37,8 +37,6 @@ except FileNotFoundError:
             cookies = get_chrome_cookies(host, profile=config.profile)
             for key, value in cookies.items():
                 c.append({'key': key, 'value': value, 'host': host})
-            # cookies = get_chrome_cookies('game.granbluefantasy.jp', profile=config.profile)
-        # cookies.update(get_chrome_cookies('.game.granbluefantasy.jp', profile=config.profile))
         with open(str(cron_dir / 'cookie.json'), 'w+', encoding='utf8') as f:
             json.dump(c, f)  # type: Dict[str, str]
     except ImportError:

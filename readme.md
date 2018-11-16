@@ -12,23 +12,14 @@ start_time = datetime.datetime(2018, 5, 30, 6, 0, 0, tzinfo=timezone)
 end_time = datetime.datetime(2018, 5, 30, 11, 30, 0, tzinfo=timezone)
 start_time = int(start_time.timestamp())
 end_time = int(end_time.timestamp())
-r = requests.get('https://granbluefantasy.trim21.cn/api/v0.1/bookmaker?start={}&end={}'
+r = requests.get('https://{your_host}/api/v0.1/bookmaker?start={}&end={}'
                  .format(start_time, end_time))
 pprint.pprint(r.json())
 ```
 
+replace `{your_host}` with real host you are running the server.
+
 start_time and end_time should be standard unix timestamp.
-
-## get individual rank history data
-
-```python
-import requests
-import pprint
-
-user_id = 'id you want to search'
-r = requests.get('https://granbluefantasy.trim21.cn/api/v0.1/teamraid038/individual', {'user_id': user_id})
-pprint.pprint(r.json())
-```
 
 ## Cron
 
@@ -40,7 +31,8 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 
 ## Deploy
 
-首先安装 
+首先安装
+
 - python >= 3.6.5
 - mongodb on default port
 
@@ -55,13 +47,13 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 尝试运行`python cron/bookmaker.py` 会使用`cron/cookies.json`做为cookies抓取数据 如果抓取成功了会把抓取到的数据存入数据库.你会看到屏幕输出类似`{'north': 0, 'west': 0, 'east': 0, 'south': 0, 'time': 1542379231, '_id': ObjectId('5beed6df0048fa6048c63987')}`的内容.
 如果cy又改了认证方式导致无法登录,你会看到`{"auth_status":"require_auth","state":"mobage-connect_5beed740437a99.44333034"}`
 
- server文件夹不需要做修改(如果你的mongodb是运行在默认端口上), 安装好依赖后直接`python app.py`启动服务器, 默认会运行在6001端口.
+如果出现了后者, 可以开个issue, 我看心情会修...
 
+ server文件夹不需要做修改(如果你的mongodb是运行在默认端口上), 安装好依赖后直接`python app.py`启动服务器, 默认会运行在6001端口.
 
 ## About data
 
-If you just want to get all data, just Email [trim21me@hotmail.com](mailto:trim21me@hotmail.com). Do not crawl from api.
-
+因为我已经退坑了, 也不会再在服务器上运行这个项目. 所以如果想要数据的话请自己从cy那边爬.
 
 ## LICENSE
 
