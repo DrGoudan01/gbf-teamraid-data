@@ -41,11 +41,17 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 
 然后安装`pywin32`(`pip install pypiwin32`, 你也可以通过那个exe安装.)
 
-修改`cron/config.py`中的`profile`为你要使用的对应的chrome的profile, 修改`cron/vars.py`中的`teamraid`变量 , 比如2018年8月24号这次团战是 `teamraid040` 这个值会出现在古战场首页的网页链接中.
+### config
+
+修改`cron/config.py`中的`profile`为你要使用的对应的chrome的profile 右键对应的chrome快捷方式, 属性-快捷方式-目标中 `... --profile-directory="Profile 3"` 这里的`Profile 3` 或者`Default`.
+
+`teamraid`改为本次团战的相应的值, 比如2018年8月24号这次团战是 `teamraid040` 这个值会出现在古战场首页的网页链接中.
+
+`user_agent`为你的浏览器客户端版本. 在浏览器中按f12, 选择network选项卡中任何一个请求, 找到request headers的`User-Agent`, 把冒号`:`后面的部分作为值.![UA](https://ws1.sinaimg.cn/large/bd69bf14ly1fxb5cyngzbj211306vglv.jpg) 选中的蓝色部分
 
 请确保使用的profile对应的账号看(skip)过了第一次点进马票的剧情, 不然会导致无法抓取马票数据.
 
-首先运行`python cron/cookies.py`, 在这一步程序会把对应的cookies从chrome的数据库中复制出来保存在本地`cron/cookies.dump`文件, 你会看到`获取cookies成功`. 
+首先运行`python cron/cookies.py`, 在这一步程序会把对应的cookies从chrome的数据库中复制出来保存在本地`cron/cookies.dump`文件, 你会看到`获取cookies成功`.
 
 (这是一个`requests.cookies.RequestsCookieJar`实例经过`pickle`持久化的文件.)
 

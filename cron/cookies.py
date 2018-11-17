@@ -1,9 +1,9 @@
 import os
 import json
 import pathlib
-import config
 from typing import List, Dict
 from vars import cron_dir
+import vars as config
 import pickle
 
 
@@ -19,6 +19,7 @@ def get_chrome_cookies(url, profile: str = 'Default'):
     import win32crypt
 
     cookie_file_path = os.path.join(os.environ['LOCALAPPDATA'], r'Google\Chrome\User Data\{}\Cookies'.format(profile))
+    print(cookie_file_path)
     conn = sqlite3.connect(cookie_file_path)
     ret_dict = {}
     rows = list(conn.execute("select name, encrypted_value from cookies where host_key = '{}'".format(url)))
@@ -35,7 +36,7 @@ except FileNotFoundError:
     import requests.cookies
     try:
         c = requests.cookies.RequestsCookieJar()
-        for host in ['game.granbluefantasy.jp', '.game.granbluefantasy.jp']:
+        for host in ['game.granbluefantasy.jp', '.game.granbluefantasy.jp', '.mobage.jp']:
             cookies = get_chrome_cookies(host, profile=config.profile)
             print('获取到 {} 域名下的cookies {} 条'.format(host, len(cookies)))
             for key, value in cookies.items():
@@ -44,5 +45,6 @@ except FileNotFoundError:
         with open(str(cron_dir / 'cookies.dump'), 'wb+') as f:
             pickle.dump(c, f)
         print('获取cookies成功')
+        cookies = c
     except ImportError:
         raise Exception('无法获取cookies, 请检查cookies.dump文件是否存在.')

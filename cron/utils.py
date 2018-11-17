@@ -2,7 +2,7 @@ import re
 
 import requests
 import requests.cookies
-from config import proxies, headerString
+from vars import proxies, headerString
 from cookies import cookies as defaultCookies
 
 
