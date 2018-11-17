@@ -18,8 +18,5 @@ X-VERSION        : {version}
 
 mongo = {
     'url': 'mongodb://127.0.0.1:27017/',
-    'db' : 'gbf'
+    'db': 'gbf'
 }
-if env == 'local':
-    proxies = {'http': 'http://127.0.0.1:8123'}
-    # profile = 'Profile 2'

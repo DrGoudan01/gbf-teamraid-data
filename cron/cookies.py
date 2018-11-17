@@ -33,11 +33,11 @@ try:
     cookies = loadCookies()
 except FileNotFoundError:
     import requests.cookies
-
     try:
         c = requests.cookies.RequestsCookieJar()
         for host in ['game.granbluefantasy.jp', '.game.granbluefantasy.jp']:
             cookies = get_chrome_cookies(host, profile=config.profile)
+            print('获取到 {} 域名下的cookies {} 条'.format(host, len(cookies)))
             for key, value in cookies.items():
                 c.set(key, value, domain=host)
                 # c.append({'key': key, 'value': value, 'host': host})
