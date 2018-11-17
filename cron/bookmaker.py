@@ -10,6 +10,7 @@ from mongo import bookmaker
 from utils import initSession
 from vars import cron_dir, teamraid
 import pickle
+import pymongo
 
 
 def main():
@@ -32,13 +33,14 @@ def main():
             'time': int(time.time())
         }
 
+        print('成功抓取到数据', data)
         result = bookmaker.insert_one(data)
-        print(data)
         print('成功保存数据')
-    except Exception as e:
+    except pymongo.errors.ConnectionFailure:
+        print('成功获取到数据, 但是无法保存')
+    except:
         print(r.text)
-        raise e
-        print('未能成功保存数据')
+        print('未能成功保存数据, 请检查输出')
 
 
 if __name__ == '__main__':

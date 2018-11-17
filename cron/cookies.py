@@ -43,5 +43,6 @@ except FileNotFoundError:
                 # c.append({'key': key, 'value': value, 'host': host})
         with open(str(cron_dir / 'cookies.dump'), 'wb+') as f:
             pickle.dump(c, f)
+        print('获取cookies成功')
     except ImportError:
         raise Exception('no cookies given')
