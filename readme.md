@@ -31,31 +31,38 @@ you need to install `pypiwin32` when you try to get cookies from Chrome on windo
 
 ## Deploy
 
-首先安装
-
-- python >= 3.6.5
-- mongodb on default port
-
-启动mongodb, 进入项目路径后`pip install -r requirements.txt`, 安装完所有的依赖.
-
-整个项目分为两部分, server和cron
-
 ### 请使用mobage注册的账号, 其他登录方式不保证一定可以成功抓取数据
 
 ### 请先把项目clone到本地,
 
-安装`pywin32`(`pip install pypiwin32`), 修改`cron/config.py`中的`profile`为你要使用的对应的chrome的profile, 修改 `cron/vars.py`中的`teamraid`变量 , 比如2018年8月24号这次团战是 `teamraid040` 这个值会出现在古战场首页的网页链接中.
+首先安装python >= 3.6.5
+
+然后进入项目文件夹(gbf-teamraid-data), 运行`pip install -r requirements.txt`, 安装完所需的python依赖.
+
+然后安装`pywin32`(`pip install pypiwin32`, 你也可以通过那个exe安装.)
+
+修改`cron/config.py`中的`profile`为你要使用的对应的chrome的profile, 修改`cron/vars.py`中的`teamraid`变量 , 比如2018年8月24号这次团战是 `teamraid040` 这个值会出现在古战场首页的网页链接中.
 
 请确保使用的profile对应的账号看(skip)过了第一次点进马票的剧情, 不然会导致无法抓取马票数据.
 
-首先运行`python cron/cookies.py`, 在这一步程序会把对应的cookies从chrome的数据库中复制出来保存在本地`cron/cookies.dump`文件, 这是一个. 你会看到`获取cookies成功`
+首先运行`python cron/cookies.py`, 在这一步程序会把对应的cookies从chrome的数据库中复制出来保存在本地`cron/cookies.dump`文件, 你会看到`获取cookies成功`. 
 
-尝试运行`python cron/bookmaker.py` 会使用`cron/cookies.json`做为cookies抓取数据 如果抓取成功了会把抓取到的数据存入数据库.你会看到屏幕输出类似`{'north': 0, 'west': 0, 'east': 0, 'south': 0, 'time': 1542379231, '_id': ObjectId('5beed6df0048fa6048c63987')}`的内容.
+(这是一个`requests.cookies.RequestsCookieJar`实例经过`pickle`持久化的文件.)
+
+尝试运行`python cron/bookmaker.py` 会使用`cron/cookies.dump`做为cookies抓取数据 如果抓取成功了会尝试把抓取到的数据存入数据库.你会看到屏幕输出类似`{'north': 0, 'west': 0, 'east': 0, 'south': 0, 'time': 1542379231}`的内容.
+
 如果cy又改了认证方式导致无法登录,你会看到`{"auth_status":"require_auth","state":"mobage-connect_5beed740437a99.44333034"}`和`未能成功抓取数据`
 
 (如果出现了后者, 可以开个issue, 我看心情会修...)
 
 ### 然后把整个项目文件夹(gbf-teamraid-data)复制到服务器上
+
+安装:
+
+- python >= 3.6.5
+- mongodb on default port
+
+`pip install -r requirements.txt`, 安装完所有的依赖.
 
 如果成功抓取到了数据, 把整个cron文件夹复制到你的服务器上, 设置一个定时任务, 定时在服务器上运行`python cron/bookmaker.py`抓取数据. 频率根据你的心情和需求. 不过马票网页应该是每20分钟更新一次. 建议设置为每小时的8 28 48进行抓取.
 
