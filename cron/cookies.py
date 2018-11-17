@@ -45,4 +45,4 @@ except FileNotFoundError:
             pickle.dump(c, f)
         print('获取cookies成功')
     except ImportError:
-        raise Exception('no cookies given')
+        raise Exception('无法获取cookies, 请检查cookies.dump文件是否存在.')
