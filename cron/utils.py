@@ -23,12 +23,17 @@ def initSession():
                       if len(line) == 2 and line[0] != 'Cookie'}
     s = requests.Session()
     s.proxies.update(proxies)
-    jar = requests.cookies.RequestsCookieJar()
-    for cookie in defaultCookies:
-        jar.set(cookie['key'], cookie['value'], domain=cookie['host'])
+    # jar = requests.cookies.RequestsCookieJar()
+    # for cookie in defaultCookies:
+    # jar.set(cookie['key'], cookie['value'], domain=cookie['host'])
     # jar.set('tasty_cookie', 'yum', domain='httpbin.org', path='/cookies')
     # jar.set('gross_cookie', 'blech', domain='httpbin.org', path='/elsewhere')
-    s.cookies = jar
+    s.cookies = defaultCookies
     # s.cookies.update(defaultCookies)
     s.headers.update(defaultHeaders)
     return s
+
+
+def save_cookies_jar(s: requests.Session):
+    with open(str(cron_dir / 'cookies.dump'), 'wb+') as f:
+        pickle.dump(s.cookies, f)

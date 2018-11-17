@@ -4,11 +4,12 @@ import pathlib
 import config
 from typing import List, Dict
 from vars import cron_dir
+import pickle
 
 
 def loadCookies():
-    with open(str(cron_dir / 'cookie.json'), 'r', encoding='utf8') as f:
-        cookies = json.load(f)  # type: Dict[str,str]
+    with open(str(cron_dir / 'cookies.dump'), 'rb') as f:
+        cookies = pickle.load(f)  # type: Dict[str,str]
     return cookies
 
 
@@ -31,13 +32,16 @@ def get_chrome_cookies(url, profile: str = 'Default'):
 try:
     cookies = loadCookies()
 except FileNotFoundError:
+    import requests.cookies
+
     try:
-        c = []
+        c = requests.cookies.RequestsCookieJar()
         for host in ['game.granbluefantasy.jp', '.game.granbluefantasy.jp']:
             cookies = get_chrome_cookies(host, profile=config.profile)
             for key, value in cookies.items():
-                c.append({'key': key, 'value': value, 'host': host})
-        with open(str(cron_dir / 'cookie.json'), 'w+', encoding='utf8') as f:
-            json.dump(c, f)  # type: Dict[str, str]
+                c.set(key, value, domain=host)
+                # c.append({'key': key, 'value': value, 'host': host})
+        with open(str(cron_dir / 'cookies.dump'), 'wb+') as f:
+            pickle.dump(c, f)
     except ImportError:
         raise Exception('no cookies given')
